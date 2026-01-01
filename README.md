@@ -1,7 +1,6 @@
-# SENTRA
-SENTRA adalah platform intelijen pemerintahan yang mengintegrasikan berbagai sumber data publik dan operasional untuk menghasilkan insight real-time, early warning, dan dukungan pengambilan keputusan berbasis data.  Platform ini dirancang modular, extensible, sehingga dapat digunakan lintas sektor tanpa membangun sistem baru untuk setiap kebutuhan.
+## 🏛️ Arsitektur Platform SENTRA
 
-
+```mermaid
 flowchart LR
     %% =====================
     %% ACTORS / DATA SOURCES
@@ -31,7 +30,7 @@ flowchart LR
     DS5 --> IG1
 
     %% =====================
-    %% NORMALIZATION LAYER
+    %% NORMALIZATION
     %% =====================
     subgraph Normalization["Normalization & Validation"]
         N1[Schema Mapper]
@@ -41,13 +40,12 @@ flowchart LR
 
     IG1 --> N1
     IG2 --> N1
-    IG3 --> N1
     IG4 --> N1
 
     N1 --> N2 --> N3
 
     %% =====================
-    %% STORAGE LAYER
+    %% STORAGE
     %% =====================
     subgraph Storage["Data Storage"]
         DB1[(Operational DB)]
@@ -63,10 +61,10 @@ flowchart LR
     %% INTELLIGENCE CORE
     %% =====================
     subgraph Intelligence["Intelligence Core"]
-        A1[Trend Analysis Engine]
-        A2[Anomaly Detection Engine]
-        A3[Sentiment Analysis Engine]
-        A4[Risk Scoring Engine]
+        A1[Trend Analysis]
+        A2[Anomaly Detection]
+        A3[Sentiment Analysis]
+        A4[Risk Scoring]
     end
 
     DB2 --> A1
@@ -75,33 +73,15 @@ flowchart LR
     DB2 --> A4
 
     %% =====================
-    %% ALERT & GOVERNANCE
+    %% DELIVERY
     %% =====================
-    subgraph Governance["Governance & Control"]
-        G1[Rule Engine]
-        G2[Threshold Engine]
-        G3[Audit & Logging]
-        G4[Data Lineage]
-        G5[Access Policy]
-    end
-
-    A2 --> G1
-    A4 --> G2
-    A1 --> G3
-    A3 --> G4
-
-    %% =====================
-    %% DELIVERY LAYER
-    %% =====================
-    subgraph Delivery["Delivery & Visualization"]
+    subgraph Delivery["Delivery Layer"]
         D1[Government Dashboard]
-        D2[Reports & Export]
-        D3[Early Warning System]
-        D4[Public Transparency Portal]
+        D2[Early Warning System]
+        D3[Reports & Export]
     end
 
-    G1 --> D3
-    G2 --> D3
-    DB2 --> D1
-    DB2 --> D2
-    DB2 --> D4
+    A1 --> D1
+    A2 --> D2
+    A4 --> D2
+    DB2 --> D3
